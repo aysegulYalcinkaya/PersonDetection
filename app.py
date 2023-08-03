@@ -20,9 +20,34 @@ def index():
 def how_it_works():
     return render_template('how-it-works.html')
 
-@app.route('/get-started')
+@app.route('/get-started',methods=['POST','GET'])
 def get_started():
-    return render_template('get-started.html')
+    if request.method=='GET':
+        return render_template('get-started.html')
+    else:
+        if 'file' not in request.files:
+            return redirect(url_for('get_started'))
+
+        file = request.files['file']
+
+        if file.filename == '':
+            return redirect(url_for('get_started'))
+
+        if file and allowed_file(file.filename):
+            # Save the uploaded file to the 'uploads' folder
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
+
+            # Process the video using the ML model
+            video_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            CFG_MODEL_PATH = "models/yolov5s.pt"
+            model = torch.hub.load('ultralytics/yolov5', 'custom',
+                                   path=CFG_MODEL_PATH, force_reload=True, device='cpu')
+            result = process_video(model, video_path)
+
+            return render_template('get-started.html',result=result)
+
+        else:
+            return "Invalid file format. Please upload a valid video file."
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -35,19 +60,20 @@ def results_parser(results):
         for c in results.pred[0][:, -1].unique():
             n = (results.pred[0][:, -1] == c).sum()  # detections per class
             s += f"{n} {results.names[int(c)]}{'s' * (n > 1)}, "  # add to string
-    return s
+    return s[0:-2]
 
 
 def process_video(model, video):
     video_name = osp.basename(video)
-    outputpath = osp.join('data/video_output', video_name)
+    outputpath = osp.join('static/data/video_output', video_name)
 
     # Create A Dir to save Video Frames
-    os.makedirs('data/video_frames', exist_ok=True)
-    frames_dir = osp.join('data/video_frames', video_name)
+    os.makedirs('static/data/video_frames', exist_ok=True)
+    frames_dir = osp.join('static/data/video_frames', video_name)
     os.makedirs(frames_dir, exist_ok=True)
     cap = cv2.VideoCapture(video)
     frame_count = 0
+    return_list=[]
 
     while True:
         frame_count += 1
@@ -56,11 +82,12 @@ def process_video(model, video):
             break
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         result = model(frame)
-        print(results_parser(result))
+
         result.render()
         image = Image.fromarray(result.ims[0])
 
         image.save(osp.join(frames_dir, f'{frame_count}.jpg'))
+        return_list.append({"frame": osp.join(frames_dir, f'{frame_count}.jpg'), "result": results_parser(result)})
     cap.release()
     # convert frames in dir to a single video file without using ffmeg
     image_folder = frames_dir
@@ -77,31 +104,7 @@ def process_video(model, video):
 
     cv2.destroyAllWindows()
     video.release()
-@app.route('/upload', methods=['POST'])
-def upload():
-    if 'file' not in request.files:
-        return redirect(url_for('get_started'))
-
-    file = request.files['file']
-
-    if file.filename == '':
-        return redirect(url_for('get_started'))
-
-    if file and allowed_file(file.filename):
-        # Save the uploaded file to the 'uploads' folder
-        file.save(os.path.join(app.config['UPLOAD_FOLDER'], file.filename))
-
-        # Process the video using the ML model
-        video_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
-        CFG_MODEL_PATH = "models/yolov5s.pt"
-        model = torch.hub.load('ultralytics/yolov5', 'custom',
-                               path=CFG_MODEL_PATH, force_reload=True, device='cpu')
-        frame_count = process_video(model,video_path)
-
-        return f"Video uploaded and processed. Total frames: {frame_count}"
-
-    else:
-        return "Invalid file format. Please upload a valid video file."
+    return return_list
 
 
 if __name__ == '__main__':

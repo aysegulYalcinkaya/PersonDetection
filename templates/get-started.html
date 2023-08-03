@@ -38,13 +38,14 @@
                     <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link tm-nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link tm-nav-link" href="/">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link tm-nav-link" href="/how-it-works">How It Works?</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link tm-nav-link active" href="/get-started">GET STARTED NOW <span class="sr-only">(current)</span></a>
+                            <li class="nav-item active">
+                                <a class="nav-link tm-nav-link" href="/get-started">GET STARTED NOW <span
+                                        class="sr-only">(current)</span></a>
                             </li>
                         </ul>
                     </div>
@@ -55,18 +56,45 @@
 </div>
 <div class="container mt-7">
     <div class="row mb-6 justify-content-center">
-        <div class="col-lg-8 mb-lg-0 mb-5 pr-lg-5">
+        <div class="col-lg-12 mb-lg-0 mb-5 pr-lg-5">
             <section class="mb-10">
                 <div>
                     <h3 class="tm-title-gray mb-4">Upload Video</h3>
+                    <hr class="mb-5 tm-hr">
                 </div>
-                <form method="POST" action="/upload" enctype="multipart/form-data">
-                    <input type="file" name="file" accept=".mp4">
-                    <input type="submit" value="Upload">
+                <form method="POST" action="/get-started" enctype="multipart/form-data">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <input type="file" name="file" accept=".mp4" class="form-control">
+                        </div>
+                        <div class="col-lg-3">
+                            <input type="submit" value="Upload" class="btn btn-primary">
+                        </div>
+                    </div>
                 </form>
             </section>
         </div>
     </div>
+    {% if result %}
+        <div class="row mb-6 justify-content-center">
+            <div class="col-lg-12 mb-lg-0 mb-5 pr-lg-5">
+                <section class="mb-10">
+                    <div>
+                        <h3 class="tm-title-gray mb-4">Results</h3>
+                        <hr class="mb-5 tm-hr">
+                    </div>
+                    <div class="row">
+                        {% for r in result %}
+                            <div class="col-lg-4">
+                                <img src="{{ r.frame }}" class="img-result">
+                                <p>{{ r.result }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+        </div>
+    {% endif %}
 </div>
 <footer class="container-fluid">
     <div class="row">
