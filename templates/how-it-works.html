@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Person Detection Application</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet"/>
+        <link href="static/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="static/fontawesome/css/all.min.css" rel="stylesheet"/>
+        <link href="static/css/style.css" rel="stylesheet"/>
+    </head>
+</head>
+<body>
+<div id="parallax-1" class="parallax-window" data-parallax="scroll" data-image-src="static/img/header.jpg">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="tm-logo">
+                    <i class="fas fa-camera fa-5x mr-5"></i>
+                    <span class="text-uppercase tm-logo-text">Person Detection</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="tm-nav-container-outer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav class="navbar navbar-expand-lg" id="tm-main-nav">
+                    <button class="navbar-toggler toggler-example" type="button" data-toggle="collapse"
+                            data-target="#navbar-nav"
+                            aria-controls="navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="dark-blue-text"><i class="fas fa-bars"></i></span>
+                    </button>
+                    <div class="collapse navbar-collapse tm-nav" id="navbar-nav">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link tm-nav-link" href="/">Home </a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="nav-link tm-nav-link" href="/how-it-works">How It Works?<span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link tm-nav-link" href="/get-started">GET STARTED NOW</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-7">
+        <div class="row mb-6 justify-content-center">
+            <div class="col-lg-8 mb-lg-0 mb-5 pr-lg-5">
+                <section class="mb-10">
+                    <div>
+                        <h3 class="tm-title-gray mb-4">How It Works?</h3>
+                        <hr class="mb-5 tm-hr">
+                        <p class="mb-5">Upload your video or image: Choose any video or image from your device that you want to analyze.
+                            Our system supports various formats, ensuring a seamless experience.
+                        </p>
+                        <p class="mb-5">Detect persons in the media: Our advanced AI-powered algorithms will swiftly
+                            process the uploaded media to detect and count the number of persons present.</p>
+                        <p class="mb-5">Get instant results: Within seconds, you will receive a detailed report
+                            displaying the total count of persons detected in the video or image.</p>
+                    </div>
+                </section>
+                <section>
+                    <h3 class="tm-title-gray mb-4">How to Get Started?</h3>
+                    <hr class="mb-5 tm-hr">
+                    <div class="tm-services-box mb-60">
+                        <img src="static/img/upload.jpeg" alt="Image" class="img-fluid tm-services-img">
+                        <div>
+                            <h4 class="tm-text-primary mb-4">Upload your media</h4>
+                            <p class="tm-strategy-text">Choose the video or image you want to analyze and
+                                upload it using our straightforward interface.</p>
+                        </div>
+                    </div>
+                    <div class="tm-services-box mb-5">
+                        <img src="static/img/sit-back-1.jpeg" alt="Image" class="img-fluid tm-services-img">
+                        <div>
+                            <h4 class="tm-text-primary mb-4">Receive the results</h4>
+                            <p class="tm-strategy-text">Sit back and relax while our app does the work.
+                                Within moments, you'll receive the person count in your media.</p>
+                        </div>
+                    </div>
+                </section>
+                <a class="btn btn-primary text-white">GET STARTED NOW</a>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="container-fluid">
+    <div class="row">
+        <p class="col-lg-9 col-md-8 mb-5 mb-md-0">
+            Copyright &copy; 2023 <span class="tm-text-primary">APPLIED MACHINE LEARNING-GR#13</span>
+        </p>
+        <div class="col-lg-3 col-md-4 text-right">
+            <a rel="nofollow" target="_blank" href="" class="tm-social-link">
+                <i class="fab fa-github fa-2x tm-social-icon"></i>
+            </a>
+        </div>
+    </div>
+</footer>
+<script src="static/js/jquery-3.4.1.min.js"></script>
+<script src="static/js/bootstrap.min.js"></script>
+<script src="static/js/parallax.min.js"></script> <!-- https://pixelcog.github.io/parallax.js/ -->
+<script src="static/js/tooplate-script.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#parallax-1').parallax({imageSrc: 'img/header.jpg'});
+        $('#parallax-2').parallax({imageSrc: 'img/footer.jpg'});
+    });
+</script>
+</body>
+
+</html>
